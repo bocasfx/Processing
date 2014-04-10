@@ -6,11 +6,6 @@ class Mover {
 	PVector acceleration;
 	float mass;
 	float g = 0.01;
-
-	// float angle = 0;
-	// float aVelocity = 0;
-	// float aAcceleration = 0.01;
-
 	color cl;
 
 	Mover(float m, float x, float y, color c) {
@@ -31,38 +26,39 @@ class Mover {
 		oldLocation = location.get();
 		velocity.add(acceleration);
 		location.add(velocity);
-
-		// aAcceleration = acceleration.x / 10.0;
-		// aVelocity += aAcceleration;
-		// aVelocity = constrain(aVelocity, -0.1, 0.1);
-		// angle += aVelocity;
-
 		acceleration.mult(0);
 	}
 
 	void display() {
 		float angle = velocity.heading();
-		
-		// fill(cl,200);
 		rectMode(CENTER);
 		pushMatrix();
+		strokeWeight(2);
 		stroke(cl, int(random(20)));
 		line(location.x, location.y, oldLocation.x, oldLocation.y);
 		translate(location.x, location.y);
-		// rotate(angle);
-		// rect(0, 0, mass*16, mass*16);
-		
 		popMatrix();
 	}
 
 	PVector attract(Mover m) {
-		PVector force = PVector.sub(location, m.location); // Calculate direction of force
-		float distance = force.mag(); // Distance between objects
-		distance = constrain(distance, 5.0, 25.0); // Limiting the distance to eliminate "extreme" results for very close or very far objects
-		force.normalize(); // Normalize vector (distance doesn't matter here, we just want this vector for direction
+		// Calculate direction of force
+		PVector force = PVector.sub(location, m.location); 
 
-		float strength = (g * mass * m.mass) / (distance * distance); // Calculate gravitional force magnitude
-		force.mult(strength); // Get force vector --> magnitude * direction
+		// Distance between objects
+		float distance = force.mag(); 
+
+		// Limiting the distance to eliminate "extreme" results for very close or very far objects
+		distance = constrain(distance, 5.0, 25.0);
+
+		// Normalize vector (distance doesn't matter here, we just want this vector for direction
+		force.normalize(); 
+
+		// Calculate gravitional force magnitude
+		float strength = (g * mass * m.mass) / (distance * distance);
+
+		// Get force vector --> magnitude * direction
+		force.mult(strength);
+
 		return force;
 	}
 
