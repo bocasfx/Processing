@@ -12,9 +12,12 @@ void setup() {
 	color mColor; 
 	for (int i = 0; i < movers.length; i++) {
 		int idx = int(random(0, 5));
-		mColor = palette.colors[idx];
-		movers[i] = new Mover(0.5, random(width), random(height), mColor);
+		cl = p.colors[idx];
+		println("idx: "+idx);
+		movers[i] = new Mover(random(0.1, 0.7), random(width), random(height), cl);
 	}
+	bg = loadImage("bg.jpg");
+	background(0);
 }
 
 void draw() {
