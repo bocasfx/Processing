@@ -5,7 +5,7 @@ class Mover {
 	PVector velocity;
 	PVector acceleration;
 	float mass;
-	float g = 0.01;
+	float g = 0.1;
 
 	// float angle = 0;
 	// float aVelocity = 0;
