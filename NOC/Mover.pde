@@ -7,13 +7,14 @@ class Mover {
 	float mass;
 	float g = 0.01;
 	color cl;
+	float angle = 0;
 
-	Mover(float m, float x, float y, color c) {
+	Mover(float m, float x, float y, float z, color c) {
 		mass = m;
-		location = new PVector(x, y);
-		oldLocation = new PVector(x, y);
-		velocity = new PVector(0, 0);
-		acceleration = new PVector(0, 0);
+		location = new PVector(x, y, z);
+		oldLocation = new PVector(x, y, z);
+		velocity = new PVector(0, 0, 0);
+		acceleration = new PVector(0, 0, 0);
 		cl = c;
 	}
 
@@ -27,16 +28,21 @@ class Mover {
 		velocity.add(acceleration);
 		location.add(velocity);
 		acceleration.mult(0);
+		// g = 0.7 * sin(angle);
+		// angle += 0.075;
 	}
 
 	void display() {
 		float angle = velocity.heading();
 		rectMode(CENTER);
 		pushMatrix();
-		strokeWeight(2);
-		stroke(cl, int(random(20)));
-		line(location.x, location.y, oldLocation.x, oldLocation.y);
-		translate(location.x, location.y);
+		strokeWeight(3);
+		stroke(cl, 60);
+		//line(location.x, location.y, location.z, oldLocation.x, oldLocation.y, location.z);
+		translate(location.x, location.y, location.z);
+		sphereDetail(3);
+		sphere(3);
+		
 		popMatrix();
 	}
 
@@ -48,7 +54,7 @@ class Mover {
 		float distance = force.mag(); 
 
 		// Limiting the distance to eliminate "extreme" results for very close or very far objects
-		distance = constrain(distance, 5.0, 25.0);
+		distance = constrain(distance, 0.01, 25.0);
 
 		// Normalize vector (distance doesn't matter here, we just want this vector for direction
 		force.normalize(); 
@@ -62,12 +68,12 @@ class Mover {
 		return force;
 	}
 
-	void checkEdges() {
-		if (location.x < 0 || location.x > width) {
-			velocity.x *= -1;
-		}
-		if (location.y < 0 || location.y > height) {
-			velocity.y *= -1;
-		}
-	}
+	// void checkEdges() {
+	// 	if (location.x < 0 || location.x > width) {
+	// 		velocity.x *= -1;
+	// 	}
+	// 	if (location.y < 0 || location.y > height) {
+	// 		velocity.y *= -1;
+	// 	}
+	// }
 }
