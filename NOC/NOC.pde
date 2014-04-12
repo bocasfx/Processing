@@ -11,10 +11,11 @@ void setup() {
 	background(0);
 	Palette palette = new Palette("palette.act");
 	color mColor; 
+	int depth = (width+height)/2;
 	for (int i = 0; i < movers.length; i++) {
 		int idx = int(random(0, 5));
 		mColor = palette.colors[idx];
-		movers[i] = new Mover(random(0.1, 1.0), random(width), random(height), random((width+height)/2), mColor);
+		movers[i] = new Mover(random(0.1, 1.0), random(-width, width), random(-height, height), random(-depth, depth), mColor);
 	}
 	background(0);
 }
@@ -43,7 +44,7 @@ void draw() {
 		movers[i].display();
 	}
 	
-	rotation++;
+	rotation += 0.3;
 	// saveFrame();
 }
 

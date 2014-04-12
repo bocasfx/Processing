@@ -1,18 +1,18 @@
 class Mover {
 
 	PVector location;
-	PVector oldLocation;
 	PVector velocity;
 	PVector acceleration;
 	float mass;
-	float g = 0.01;
+	float g = 0.1;
 	color cl;
 	float angle = 0;
+	ArrayList<PVector> trajectory = new ArrayList<PVector>();
 
 	Mover(float m, float x, float y, float z, color c) {
 		mass = m;
 		location = new PVector(x, y, z);
-		oldLocation = new PVector(x, y, z);
+		trajectory.add(location.get());
 		velocity = new PVector(0, 0, 0);
 		acceleration = new PVector(0, 0, 0);
 		cl = c;
@@ -24,24 +24,33 @@ class Mover {
 	}
 
 	void update() {
-		oldLocation = location.get();
 		velocity.add(acceleration);
 		location.add(velocity);
+		trajectory.add(location.get());
 		acceleration.mult(0);
 		// g = 0.7 * sin(angle);
 		// angle += 0.075;
+		if (trajectory.size() > 120) {
+			trajectory.remove(0);
+		}
 	}
 
 	void display() {
+		smooth();
 		float angle = velocity.heading();
 		rectMode(CENTER);
 		pushMatrix();
-		strokeWeight(3);
-		stroke(cl, 60);
-		//line(location.x, location.y, location.z, oldLocation.x, oldLocation.y, location.z);
+		strokeWeight(1);
+		for (int i = 0; i < trajectory.size()-1; ++i) {
+			stroke(cl, i);
+			PVector j = trajectory.get(i);
+			PVector k = trajectory.get(i+1);
+			line(j.x, j.y, j.z, k.x, k.y, k.z);
+		}
+		
 		translate(location.x, location.y, location.z);
 		sphereDetail(3);
-		sphere(3);
+		sphere(1);
 		
 		popMatrix();
 	}
@@ -67,13 +76,4 @@ class Mover {
 
 		return force;
 	}
-
-	// void checkEdges() {
-	// 	if (location.x < 0 || location.x > width) {
-	// 		velocity.x *= -1;
-	// 	}
-	// 	if (location.y < 0 || location.y > height) {
-	// 		velocity.y *= -1;
-	// 	}
-	// }
 }
