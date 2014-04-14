@@ -4,7 +4,7 @@ class Mover {
 	PVector velocity;
 	PVector acceleration;
 	float mass;
-	float g = -0.001;
+	float g = -0.01;
 	color cl;
 	float angle = 0;
 	ArrayList<PVector> trajectory = new ArrayList<PVector>();

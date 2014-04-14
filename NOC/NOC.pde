@@ -11,8 +11,8 @@ float easing = 0.01;
 boolean changeIncr = true;
 
 void setup() {
-	size(640,360,P3D);
-	// size(1280,720,P3D);
+	// size(640,360,P3D);
+	size(1280,720,P3D);
 	background(0);
 	Palette palette = new Palette("palette2.act");
 	color mColor; 
