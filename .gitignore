@@ -215,3 +215,4 @@ pip-log.txt
 .mr.developer.cfg
 *.class
 build-tmp/
+NOC/render01.mov
