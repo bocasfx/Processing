@@ -4,21 +4,33 @@ class Mover {
 	PVector velocity;
 	PVector acceleration;
 	float mass;
-	float g = -0.02;
+	float g;
 	color cl;
-	float angle = 0;
-	ArrayList<PVector> trajectory = new ArrayList<PVector>();
-	float disturbance = 0.0;
-	float angleIncr = 0.0055;
-	float accel = 1.0;
-	float disturbanceFactor = 0.01;
+	float angle;
+	ArrayList<PVector> trajectory;
+	float disturbance;
+	float angleIncr;
+	float accel;
+	float disturbanceFactor;
+	int trajectorySize;
+	float distanceConstraintMin;
+	float distanceConstraintMax;
 
 	Mover(float m, float x, float y, float z, color c) {
+		g = -0.02;
+		angle = 0;
+		trajectory = new ArrayList<PVector>();
+		disturbance = 0.0;
+		angleIncr = 0.0055;
+		accel = 1.0;
+		disturbanceFactor = 0.01;
+		trajectorySize = 120;
+		distanceConstraintMin = 10.0;
+		distanceConstraintMax = 25.0;
 		mass = m;
 		location = new PVector(x, y, z);
 		trajectory.add(location.get());
 		velocity = new PVector(0, 0, 0);
-		// acceleration = new PVector(0, 0, 0);
 		acceleration = new PVector(random(-accel, accel), random(-accel, accel), random(-accel, accel));
 		cl = c;
 	}
@@ -45,7 +57,7 @@ class Mover {
 			g = 0;
 			disturbanceFactor = 0.0;
 		}
-		if (trajectory.size() > 120) {
+		if (trajectory.size() > trajectorySize) {
 			trajectory.remove(0);
 		}
 	}
@@ -55,7 +67,7 @@ class Mover {
 		pushMatrix();
 		strokeWeight(2);
 		for (int i = 0; i < trajectory.size()-1; ++i) {
-			stroke(cl, i*2);
+			stroke(cl, i);
 			PVector j = trajectory.get(i);
 			PVector k = trajectory.get(i+1);
 			line(j.x, j.y, j.z, k.x, k.y, k.z);
@@ -83,7 +95,7 @@ class Mover {
 		float distance = force.mag(); 
 
 		// Limiting the distance to eliminate "extreme" results for very close or very far objects
-		distance = constrain(distance, 10.0, 25.0);
+		distance = constrain(distance, distanceConstraintMin, distanceConstraintMax);
 
 		// Normalize vector (distance doesn't matter here, we just want this vector for direction
 		force.normalize(); 
