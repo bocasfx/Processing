@@ -11,7 +11,7 @@ class Mover {
 	float disturbance = 0.0;
 	float angleIncr = 0.0055;
 	float accel = 1.0;
-	float disturbanceFactor = 0.05;
+	float disturbanceFactor = 0.01;
 
 	Mover(float m, float x, float y, float z, color c) {
 		mass = m;
@@ -41,12 +41,11 @@ class Mover {
 		disturbance = disturbanceFactor * sinAngle;
 		angle += angleIncr;
 		if (sinAngle < 0.0) {
-			// g = -25;
-			// velocity.mult(0);
-			g = -1.0;
+			velocity.mult(0);
+			g = 0;
 			disturbanceFactor = 0.0;
 		}
-		if (trajectory.size() > 45) {
+		if (trajectory.size() > 120) {
 			trajectory.remove(0);
 		}
 	}
@@ -84,7 +83,7 @@ class Mover {
 		float distance = force.mag(); 
 
 		// Limiting the distance to eliminate "extreme" results for very close or very far objects
-		distance = constrain(distance, 0.01, 25.0);
+		distance = constrain(distance, 10.0, 25.0);
 
 		// Normalize vector (distance doesn't matter here, we just want this vector for direction
 		force.normalize(); 
