@@ -4,12 +4,12 @@ class Mover {
 	PVector velocity;
 	PVector acceleration;
 	float mass;
-	float g = -0.01;
+	float g = -0.02;
 	color cl;
 	float angle = 0;
 	ArrayList<PVector> trajectory = new ArrayList<PVector>();
 	float disturbance = 0.0;
-	float angleIncr = 0.0025;
+	float angleIncr = 0.0055;
 	float accel = 1.0;
 	float disturbanceFactor = 0.05;
 
@@ -42,8 +42,8 @@ class Mover {
 		angle += angleIncr;
 		if (sinAngle < 0.0) {
 			// g = -25;
-			velocity.mult(0);
-			g = 0;
+			// velocity.mult(0);
+			g = -2.0;
 			disturbanceFactor = 0.0;
 		}
 		if (trajectory.size() > 45) {
@@ -61,6 +61,13 @@ class Mover {
 			PVector k = trajectory.get(i+1);
 			line(j.x, j.y, j.z, k.x, k.y, k.z);
 		}
+
+		// for (int i = 0; i < trajectory.size(); i+=2) {
+		// 	stroke(cl, i*3);
+		// 	PVector j = trajectory.get(i);
+		// 	point(j.x, j.y, j.z);
+		// 	// sphere(1);
+		// }
 		
 		// translate(location.x, location.y, location.z);
 		// sphereDetail(3);
