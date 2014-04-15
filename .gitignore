@@ -216,3 +216,5 @@ pip-log.txt
 *.class
 build-tmp/
 NOC/render01.mov
+
+*.tif

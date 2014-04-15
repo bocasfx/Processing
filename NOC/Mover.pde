@@ -43,7 +43,7 @@ class Mover {
 		if (sinAngle < 0.0) {
 			// g = -25;
 			// velocity.mult(0);
-			g = -2.0;
+			g = -1.0;
 			disturbanceFactor = 0.0;
 		}
 		if (trajectory.size() > 45) {
