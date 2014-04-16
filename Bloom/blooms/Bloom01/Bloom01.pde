@@ -17,8 +17,8 @@ void setup() {
 	targetAngle = 90.0;
 	dAngle = 0.0;
 	easing = 0.01;
-	Palette palette = new Palette("./palettes/palette2.act");
-	Table moverDefs = loadTable("moverDefs.csv");
+	Palette palette = new Palette("../../palettes/palette2.act");
+	Table moverDefs = loadTable("../../moverDefs.csv");
 
 	strokeWeight(2);
 
@@ -52,6 +52,7 @@ void draw() {
 	float zpos = sin(radians(rotation)) * orbitRadius;
 
 	camera(xpos, ypos, zpos, 0, 0, 0, 0, -1, 0);
+	// camera(xpos, ypos, zpos, width, 0, 0, 0, -1, 0);
 
 	for (int i = 0; i < movers.length; i++) {
 		for (int j = 0; j < movers.length; j++) {
