@@ -33,6 +33,7 @@ void setup() {
 		mColor = palette.colors[idx];
 		movers[i] = new Mover(random(0.1, 1.0), 0, 0, 0, mColor);
 	}
+	strokeWeight(2);
 }
 
 void draw() {

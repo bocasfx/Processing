@@ -50,41 +50,25 @@ class Mover {
 		trajectory.add(location.get());
 		acceleration.mult(0);
 		float sinAngle = sin(angle);
-		disturbance = disturbanceFactor * sinAngle;
-		angle += angleIncr;
 		if (sinAngle < 0.0) {
 			velocity.mult(0);
 			g = 0;
 			disturbanceFactor = 0.0;
 		}
+		disturbance = disturbanceFactor * sinAngle;
+		angle += angleIncr;
 		if (trajectory.size() > trajectorySize) {
 			trajectory.remove(0);
 		}
 	}
 
 	void display() {
-		rectMode(CENTER);
-		pushMatrix();
-		strokeWeight(2);
 		for (int i = 0; i < trajectory.size()-1; ++i) {
 			stroke(cl, i);
 			PVector j = trajectory.get(i);
 			PVector k = trajectory.get(i+1);
 			line(j.x, j.y, j.z, k.x, k.y, k.z);
 		}
-
-		// for (int i = 0; i < trajectory.size(); i+=2) {
-		// 	stroke(cl, i*3);
-		// 	PVector j = trajectory.get(i);
-		// 	point(j.x, j.y, j.z);
-		// 	// sphere(1);
-		// }
-		
-		// translate(location.x, location.y, location.z);
-		// sphereDetail(3);
-		// sphere(1);
-		
-		popMatrix();
 	}
 
 	PVector attract(Mover m) {
