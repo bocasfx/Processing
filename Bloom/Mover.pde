@@ -10,28 +10,28 @@ class Mover {
 	ArrayList<PVector> trajectory;
 	float disturbance;
 	float angleIncr;
-	float accel;
 	float disturbanceFactor;
 	int trajectorySize;
 	float distanceConstraintMin;
 	float distanceConstraintMax;
 
-	Mover(float m, float x, float y, float z, color c) {
+	Mover(float m, PVector accel, float x, float y, float z, color c) {
+		
 		g = -0.02;
 		angle = 0;
-		trajectory = new ArrayList<PVector>();
 		disturbance = 0.0;
 		angleIncr = 0.0055;
-		accel = 1.0;
 		disturbanceFactor = 0.01;
 		trajectorySize = 120;
 		distanceConstraintMin = 10.0;
 		distanceConstraintMax = 25.0;
+
 		mass = m;
 		location = new PVector(x, y, z);
-		trajectory.add(location.get());
 		velocity = new PVector(0, 0, 0);
-		acceleration = new PVector(random(-accel, accel), random(-accel, accel), random(-accel, accel));
+		trajectory = new ArrayList<PVector>();
+		trajectory.add(location.get());
+		acceleration = accel;
 		cl = c;
 	}
 
