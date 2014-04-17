@@ -74,15 +74,3 @@ void draw() {
 	}
 	// saveFrame("./frames/frame-######.tif");
 }
-
-	// String[] defs;
-	// defs = new String[moversLength];
-	// for (int i = 0; i < moversLength; i++) {
-	// 	int idx = int(random(0, 5));
-	// 	x = random(-1.0, 1.0);
-	// 	y = random(-1.0, 1.0);
-	// 	z = random(-1.0, 1.0);
-	// 	m = random(0.1, 1.0);
-	// 	defs[i] = str(m) + ',' + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(idx);
-	// }
-	// saveStrings("moverDefs.csv", defs);

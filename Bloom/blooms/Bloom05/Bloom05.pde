@@ -51,7 +51,7 @@ void draw() {
 	float xpos = cos(radians(rotation)) * orbitRadius;
 	float zpos = sin(radians(rotation)) * orbitRadius;
 
-	camera(xpos, ypos, zpos, width, 0, 0, 0, 1, 1);
+	camera(xpos, ypos, zpos, 0, 0, 0, 0, -1, 0);
 
 	for (int i = 0; i < movers.length; i++) {
 		for (int j = 0; j < movers.length; j++) {
