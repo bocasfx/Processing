@@ -7,6 +7,8 @@ float rotation;
 float targetAngle;
 float dAngle;
 float easing;
+float orbitRadius;
+
 
 void setup() {
 
@@ -16,7 +18,8 @@ void setup() {
 	rotation = 0;
 	targetAngle = 90.0;
 	dAngle = 0.0;
-	easing = 0.01;
+	easing = 0.005;
+	orbitRadius = 250.0;
 	Palette palette = new Palette("../../palettes/palette2.act");
 	Table moverDefs = loadTable("../../moverDefs.csv");
 
@@ -45,13 +48,14 @@ void draw() {
 	smooth();
 	background(0);
 	lights();
-
-	float orbitRadius = width;
-	float ypos = 0;
+	
+	float ypos = 0.0;
 	float xpos = cos(radians(rotation)) * orbitRadius;
 	float zpos = sin(radians(rotation)) * orbitRadius;
 
-	camera(xpos, ypos, zpos, width, 0, 0, 0, 1, 1);
+	orbitRadius += 3.0;
+
+	camera(xpos, ypos, zpos, 0, 0, 0, 0, -1, 0);
 
 	for (int i = 0; i < movers.length; i++) {
 		for (int j = 0; j < movers.length; j++) {
@@ -66,6 +70,27 @@ void draw() {
 		movers[i].display();
 	}
 
-	rotation += 1.0;
+	if (rotation < targetAngle) {
+		dAngle = targetAngle - rotation;
+		if(abs(dAngle) > 1) {
+			rotation += dAngle * easing;
+		}
+	}
 	// saveFrame("./frames/frame-######.tif");
 }
+
+void mousePressed() {
+  exit(); 
+}
+
+	// String[] defs;
+	// defs = new String[moversLength];
+	// for (int i = 0; i < moversLength; i++) {
+	// 	int idx = int(random(0, 5));
+	// 	x = random(-1.0, 1.0);
+	// 	y = random(-1.0, 1.0);
+	// 	z = random(-1.0, 1.0);
+	// 	m = random(0.1, 1.0);
+	// 	defs[i] = str(m) + ',' + str(x) + ',' + str(y) + ',' + str(z) + ',' + str(idx);
+	// }
+	// saveStrings("moverDefs.csv", defs);

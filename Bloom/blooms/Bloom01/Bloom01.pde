@@ -66,13 +66,17 @@ void draw() {
 		movers[i].display();
 	}
 
-	if (rotation < 90) {
+	if (rotation < targetAngle) {
 		dAngle = targetAngle - rotation;
 		if(abs(dAngle) > 1) {
 			rotation += dAngle * easing;
 		}
 	}
-	// saveFrame("./frames/frame-######.tif");
+	saveFrame("./frames/frame-######.tif");
+}
+
+void mousePressed() {
+  exit(); 
 }
 
 	// String[] defs;
