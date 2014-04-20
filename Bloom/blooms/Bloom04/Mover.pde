@@ -15,9 +15,9 @@ class Mover {
 	float distanceConstraintMin;
 	float distanceConstraintMax;
 
-	Mover(float m, PVector accel, float x, float y, float z, color c) {
+	Mover(float m, PVector accel, PVector loc, color c) {
 		
-		g = -0.01;
+		g = 0.01;
 		angle = 0;
 		disturbance = 0.0;
 		angleIncr = 0.055;
@@ -27,7 +27,7 @@ class Mover {
 		distanceConstraintMax = 25.0;
 
 		mass = m;
-		location = new PVector(x, y, z);
+		location = loc;
 		velocity = new PVector(0, 0, 0);
 		trajectory = new ArrayList<PVector>();
 		trajectory.add(location.get());
@@ -50,11 +50,6 @@ class Mover {
 		trajectory.add(location.get());
 		acceleration.mult(0);
 		float sinAngle = sin(angle);
-		// if (sinAngle < 0.0) {
-		// 	velocity.mult(0);
-		// 	g = 0;
-		// 	disturbanceFactor = 0.0;
-		// }
 		disturbance = disturbanceFactor * sinAngle;
 		angle += angleIncr;
 		if (trajectory.size() > trajectorySize) {
@@ -69,6 +64,17 @@ class Mover {
 			PVector k = trajectory.get(i+1);
 			line(j.x, j.y, j.z, k.x, k.y, k.z);
 		}
+	}
+
+	void stopMotion() {
+		velocity.mult(0);
+		disturbanceFactor = 0.0;
+		g = 0.0;
+	}
+
+	void resetMotion() {
+		disturbanceFactor = random(-0.004, 0.004);
+		g = -0.01;
 	}
 
 	PVector attract(Mover m) {
