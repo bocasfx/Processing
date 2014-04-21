@@ -20,8 +20,8 @@ class Mover {
 		g = -0.02;
 		angle = 0;
 		disturbance = 0.0;
-		angleIncr = 0.0055;
-		disturbanceFactor = 0.01;
+		angleIncr = 0.0075;
+		disturbanceFactor = 0.03;
 		trajectorySize = 120;
 		distanceConstraintMin = 10.0;
 		distanceConstraintMax = 25.0;

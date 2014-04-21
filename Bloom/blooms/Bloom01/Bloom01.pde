@@ -7,6 +7,7 @@ float rotation;
 float targetAngle;
 float dAngle;
 float easing;
+float orbitRadius;
 
 void setup() {
 
@@ -17,6 +18,7 @@ void setup() {
 	targetAngle = 90.0;
 	dAngle = 0.0;
 	easing = 0.01;
+	orbitRadius = width/2;
 	Palette palette = new Palette("../../palettes/palette2.act");
 	Table moverDefs = loadTable("../../moverDefs.csv");
 
@@ -46,7 +48,8 @@ void draw() {
 	background(0);
 	lights();
 
-	float orbitRadius = width;
+	orbitRadius += 2;
+
 	float ypos = 0;
 	float xpos = cos(radians(rotation)) * orbitRadius;
 	float zpos = sin(radians(rotation)) * orbitRadius;
