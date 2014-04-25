@@ -20,10 +20,10 @@ class Mover {
 		g = -0.01;
 		angle = 0;
 		disturbance = 0.0;
-		angleIncr = 0.055;
-		disturbanceFactor = random(-0.004, 0.004);
+		angleIncr = 0.001;
+		disturbanceFactor = 0.03;
 		trajectorySize = 120;
-		distanceConstraintMin = 10.0;
+		distanceConstraintMin = 5.0;
 		distanceConstraintMax = 25.0;
 
 		mass = m;
@@ -50,11 +50,11 @@ class Mover {
 		trajectory.add(location.get());
 		acceleration.mult(0);
 		float sinAngle = sin(angle);
-		// if (sinAngle < 0.0) {
-		// 	velocity.mult(0);
-		// 	g = 0;
-		// 	disturbanceFactor = 0.0;
-		// }
+		if (sinAngle < 0.0) {
+			velocity.mult(0);
+			g = 0;
+			disturbanceFactor = 0.0;
+		}
 		disturbance = disturbanceFactor * sinAngle;
 		angle += angleIncr;
 		if (trajectory.size() > trajectorySize) {
