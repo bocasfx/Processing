@@ -1,38 +1,53 @@
 class Wave {
 
-	int xspacing = 25;
+	int xspacing;
 	int w;
-	int maxwaves = 1;
-
-	float theta = 0.0;
-	float[] amplitude = new float[maxwaves];
-	float[] dx = new float[maxwaves];
+	int maxwaves;
+	float theta;
+	float[] amplitude;
+	float[] dx;
 	float[] yvalues;
-	float yPos;
+	float position;
 	float thetaIncrement;
-	boolean left;
+	float opacity;
+	float opacityIncr;
+	boolean direction;
 	color wColor;
 
-	Wave(float yPos_, float theta_, boolean left_, color color_) {
+	Wave(color color_) {
+		theta = 0.0;
+		thetaIncrement = random(0.05, 0.3);
+		xspacing = 10;
+		maxwaves = 5;
+		amplitude = new float[maxwaves];
+		dx = new float[maxwaves];
 		w = width + 16;
+		position = 0.0;
+		opacity = 0.0;
+		direction = boolean(int(random(0,1)));
+	  wColor = color_;
 
 	  for (int i = 0; i < maxwaves; i++) {
 	    amplitude[i] = random(1,5);
-	    float period = random(100,300); 
+	    float period = random(700,1000); 
 	    dx[i] = (TWO_PI / period) * xspacing;
 	  }
 
-	  yvalues = new float[w/xspacing];
-	  yPos = yPos_;
-	  thetaIncrement = theta_;
-	  left = left_;
-	  wColor = color_;
+	  yvalues = new float[w/xspacing + 2];
+	}
+
+	void setPosition(float pos) {
+		position = pos;
+	}
+
+	float getPosition() {
+		return position;
 	}
 
 	void calcWave() {
 		theta += thetaIncrement;
 		for (int i = 0; i < yvalues.length; i++) {
-			yvalues[i] = 0;
+			yvalues[i] = position;
 		}
 
 		for (int j = 0; j < maxwaves; j++) {
@@ -40,7 +55,7 @@ class Wave {
 			for (int i = 0; i < yvalues.length; i++) {
 				if (j % 2 == 0)  yvalues[i] += sin(x)*amplitude[j];
 				else yvalues[i] += cos(x)*amplitude[j];
-				if (left) {
+				if (direction) {
 					x+=dx[j];	
 				} else {
 					x-=dx[j];
@@ -48,16 +63,15 @@ class Wave {
 				
 			}
 		}
+		opacity = (position / height) * 255;
 	}
 
 	void renderWave() {
-		noStroke();
-		fill(wColor, 50);
-		ellipseMode(CENTER);
-		for (int x = 0; x < yvalues.length; x++) {
-			ellipse(x*xspacing, yPos+yvalues[x], 10, 10);
-			// point(x*xspacing, yPos+yvalues[x]);
-			// line(x*xspacing, yPos+yvalues[x], (x+1)*xspacing, yPos+yvalues[x+1]);
+		stroke(wColor, opacity);
+		strokeWeight(2);
+		for (int x = 0; x < yvalues.length-1; x++) {
+			// point(x*xspacing, position+yvalues[x]);
+			line(x*xspacing, position+yvalues[x], (x+1)*xspacing-2, position+yvalues[x+1]);
 		}
 	}
 }

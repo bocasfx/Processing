@@ -4,28 +4,43 @@
 // http://natureofcode.com
 // Additive Wave
 
-Wave[] waves;
-int waveCount;
+ArrayList<Wave> waves;
+float waveYPos;
+float dPos;
+float easing;
+GplPalette palette;
+int col;
 
 void setup() {
   size(1280, 720);
-
-  waveCount = 200;
-  waves = new Wave[waveCount];
-  Palette palette = new Palette("palette.act");
-  int idx;
-
-  for (int i = 0; i < waveCount; ++i) {
-    idx = int(random(0, 5));
-    waves[i] = new Wave(random(height), random(0.05, 0.1), boolean(i%2), palette.colors[idx]);
-  }
+  dPos = 0.0;
+  easing = 0.001;
+  palette = new GplPalette("palette.gpl");
+  waves = new ArrayList<Wave>();
 }
 
 void draw() {
   background(0);
-    for (int i = 0; i < waveCount; ++i) {
-    waves[i].calcWave();
-    waves[i].renderWave();  
+  strokeCap(ROUND);
+  smooth();
+
+  if (frameCount % 25 == 0) {
+    waves.add(new Wave(palette.colors[int(col % 15)]));
+    col++;
+  }
+
+  for (int i = 0; i < waves.size(); ++i) {
+    waveYPos = waves.get(i).getPosition();
+    if (waveYPos < height) {
+      dPos = height - waveYPos;
+      waveYPos += dPos * easing;
+    }
+    waves.get(i).setPosition(waveYPos);
+    waves.get(i).calcWave();
+    waves.get(i).renderWave();
+
+    if (waveYPos > height) {
+      waves.remove(i);
+    }
   }
 }
-
